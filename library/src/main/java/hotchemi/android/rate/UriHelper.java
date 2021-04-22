@@ -13,6 +13,8 @@ final class UriHelper {
 
     private static final String AMAZON_APPSTORE = "amzn://apps/android?p=";
 
+    private static final String HUAWEI_APP_GALLERY = "appmarket://details?id=";
+
     private UriHelper() {
     }
 
@@ -22,6 +24,10 @@ final class UriHelper {
 
     static Uri getAmazonAppstore(String packageName) {
         return packageName == null ? null : Uri.parse(AMAZON_APPSTORE + packageName);
+    }
+
+    static Uri getHuaweiAppGallery(String packageName) {
+        return packageName == null ? null : Uri.parse(HUAWEI_APP_GALLERY + packageName);
     }
 
     static boolean isPackageExists(Context context, String targetPackage) {

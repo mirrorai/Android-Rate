@@ -9,6 +9,7 @@ import android.view.View;
 
 import static hotchemi.android.rate.IntentHelper.createIntentForAmazonAppstore;
 import static hotchemi.android.rate.IntentHelper.createIntentForGooglePlay;
+import static hotchemi.android.rate.IntentHelper.createIntentForHuaweiAppGallery;
 import static hotchemi.android.rate.PreferenceHelper.setAgreeShowDialog;
 import static hotchemi.android.rate.PreferenceHelper.setRemindInterval;
 import static hotchemi.android.rate.Utils.getDialogBuilder;
@@ -34,8 +35,8 @@ final class DialogManager {
         builder.setPositiveButton(options.getPositiveText(context), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                final Intent intentToAppstore = options.getStoreType() == StoreType.GOOGLEPLAY ?
-                createIntentForGooglePlay(context) : createIntentForAmazonAppstore(context);
+                StoreType storeType = options.getStoreType();
+                final Intent intentToAppstore = createIntentToAppstore(context, storeType);
                 context.startActivity(intentToAppstore);
                 setAgreeShowDialog(context, false);
                 if (listener != null) listener.onClickButton(which);
@@ -63,6 +64,19 @@ final class DialogManager {
         }
 
         return builder.create();
+    }
+
+    private static Intent createIntentToAppstore(Context context, StoreType storeType) {
+        switch (storeType) {
+            case GOOGLEPLAY:
+                return createIntentForGooglePlay(context);
+            case AMAZON:
+                return createIntentForAmazonAppstore(context);
+            case HUAWEI:
+                return createIntentForHuaweiAppGallery(context);
+            default:
+                throw new IllegalArgumentException("Wrong store type: " + storeType.toString());
+        }
     }
 
 }

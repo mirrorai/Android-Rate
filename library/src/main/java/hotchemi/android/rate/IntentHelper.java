@@ -5,11 +5,14 @@ import android.content.Intent;
 
 import static hotchemi.android.rate.UriHelper.getGooglePlay;
 import static hotchemi.android.rate.UriHelper.getAmazonAppstore;
+import static hotchemi.android.rate.UriHelper.getHuaweiAppGallery;
 import static hotchemi.android.rate.UriHelper.isPackageExists;
 
 final class IntentHelper {
 
     private static final String GOOGLE_PLAY_PACKAGE_NAME = "com.android.vending";
+
+    private static final String HUAWEI_APP_GALLERY_PACKAGE_NAME = "com.huawei.appmarket";
 
     private IntentHelper() {
     }
@@ -28,4 +31,10 @@ final class IntentHelper {
         return new Intent(Intent.ACTION_VIEW, getAmazonAppstore(packageName));
     }
 
+    static Intent createIntentForHuaweiAppGallery(Context context) {
+        final String packageName = context.getPackageName();
+        final Intent intent = new Intent(Intent.ACTION_VIEW, getHuaweiAppGallery(packageName));
+        intent.setPackage(HUAWEI_APP_GALLERY_PACKAGE_NAME);
+        return intent;
+    }
 }
