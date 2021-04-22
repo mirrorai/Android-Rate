@@ -37,7 +37,11 @@ final class DialogManager {
             public void onClick(DialogInterface dialog, int which) {
                 StoreType storeType = options.getStoreType();
                 final Intent intentToAppstore = createIntentToAppstore(context, storeType);
-                context.startActivity(intentToAppstore);
+                try {
+                    context.startActivity(intentToAppstore);
+                } catch (Throwable t) {
+                    // Despite all checks sometimes startActivity causes crash.
+                }
                 setAgreeShowDialog(context, false);
                 if (listener != null) listener.onClickButton(which);
             }
